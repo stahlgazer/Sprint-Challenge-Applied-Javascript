@@ -19,44 +19,39 @@
 // Create a card for each of the articles and add the card to the DOM.
 
 const entry = document.querySelector('.cards-container');
-axios.get('https://lambda-times-backend.herokuapp.com/articles')
-  .then(response => {
-    console.log(response.data);
-    const article = createArticle(response.data);
-    entry.appendChild(article);
-  })
+axios.get("https://lambda-times-backend.herokuapp.com/articles")
+    .then(response => {
+        console.log(response.data);
+        const article = createArticle(response.data);
+        entry.appendChild(article);
+    })
 
-function createArticle(object){
-// elements
-const card = document.createElement('div');
-const headline = document.createElement('div');
-const authorDiv = document.createElement('div');
-const containerImg = document.createElement('div');
-const img = document.createElement('img');
-const authorName = document.createElement('span');
+function createArticle(object) {
+    // elements
+    const card = document.createElement('div');
+    const headline = document.createElement('div');
+    const authorDiv = document.createElement('div');
+    const containerImg = document.createElement('div');
+    const img = document.createElement('img');
+    const authorName = document.createElement('span');
 
-// classes
-card.classList.add('card')
-headline.classList.add('headline')
-authorDiv.classList.add('div')
-containerImg.classList.add('div')
+    // classes
+    card.classList.add('card')
+    headline.classList.add('headline')
+    authorDiv.classList.add('author')
+    containerImg.classList.add('img-container')
 
+    // structure
+    card.appendChild(headline)
+    card.appendChild(authorDiv)
+    authorDiv.appendChild(containerImg)
+    containerImg.appendChild(img)
+    authorDiv.appendChild(authorName)
 
-// structure
-card.appendChild(headline)
-card.appendChild(authorDiv)
-authorDiv.appendChild(containerImg)
-containerImg.appendChild(img)
-authorDiv.appendChild(authorName)
+    // content
+    img.src = object.authorPhoto
+    authorName.textContent = 'By ' + object.aurthorName;
+    headline.textContent = object.headline;
 
-// content
-img.src = object.authorPhoto
-authorName.textContent = object.aurthorName;
-headline.textContent = object.headline;
-
-
-return card
+    return card
 }
-const articles = document.querySelector(".cards-container");
-articles.appendChild(createArticle());
-console.log(articles)
